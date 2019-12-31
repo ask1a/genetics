@@ -92,7 +92,7 @@ def comparaison_pop(pop1, pop2):
 
 taille_pop = 1000
 nb_genes = 50
-proba_pop_base = 0
+proba_pop_base = 0.5
 
 taux_croisement = 0.5
 taux_mutation = 0.0001
