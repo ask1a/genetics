@@ -25,7 +25,7 @@ import random
 
 
 def generation_pop_base(taille_pop, nb_genes, proba_pop_base):
-    return np.random.choice(a=[0, 1], size=(taille_pop, nb_genes), p=[proba_pop_base, 1 - proba_pop_base])
+    return np.random.choice(a=[1, 0], size=(taille_pop, nb_genes), p=[proba_pop_base, 1 - proba_pop_base])
 
 
 def evaluation_indiv(index_individu, pop):
@@ -92,22 +92,28 @@ def comparaison_pop(pop1, pop2):
 
 taille_pop = 1000
 nb_genes = 50
-proba_pop_base = 0.5
-taux_croisement = 0.3
-critere_arret = 0.01
+proba_pop_base = 0
+
+taux_croisement = 0.5
+taux_mutation = 0.0001
+
+critere_arret = 0.0
 
 population = generation_pop_base(taille_pop, nb_genes, proba_pop_base)
 
+iteration = 0
 while True:
+    iteration += 1
     selection = selection_tournoi(population)
     pop_next_gen = reproduction(population, selection, taux_croisement)
-    pop_mutee = mutation(pop_next_gen, 0.002)
+    pop_mutee = mutation(pop_next_gen, taux_mutation)
 
     # critere d arret
     print(comparaison_pop(population, pop_mutee))
-    if comparaison_pop(population, pop_mutee) < critere_arret:
+    if comparaison_pop(population, pop_mutee) <= critere_arret:
         break
 
     population = pop_mutee
 
+print(iteration)
 print(population[:5])
